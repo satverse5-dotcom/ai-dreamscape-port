@@ -64,6 +64,27 @@ This project is built with:
 
 Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
 
+### Environment Variables (Required for Deployment)
+
+This project requires a backend server for the AI chatbot and contact form. When deploying, you **must** set the following environment variable so the frontend can reach your hosted backend:
+
+| Variable | Description | Example |
+|---|---|---|
+| `VITE_API_URL` | Full URL of your deployed backend server | `https://your-backend.onrender.com` |
+
+#### How to set it on common platforms
+
+**Vercel / Netlify:**
+Go to your project's **Settings → Environment Variables** and add:
+```
+VITE_API_URL=https://your-backend-url.com
+```
+
+**Render / Railway (for the backend):**
+Make sure your backend server is deployed and publicly accessible first, then use its URL as `VITE_API_URL` in the frontend deployment.
+
+> **Local development:** `VITE_API_URL` in your `.env` file defaults to `http://localhost:5000`, so local development works without any additional setup.
+
 ## Can I connect a custom domain to my Lovable project?
 
 Yes, you can!

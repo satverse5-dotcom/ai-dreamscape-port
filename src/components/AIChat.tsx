@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Bot } from "lucide-react";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 const AIChat = () => {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<{ role: "user" | "ai"; text: string }[]>([
@@ -23,7 +25,7 @@ const AIChat = () => {
     setIsLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/ai", {
+      const res = await fetch(`${API_URL}/api/ai`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userMsg }),
@@ -36,7 +38,7 @@ const AIChat = () => {
     } catch {
       setMessages((prev) => [
         ...prev,
-        { role: "ai", text: "⚠️ Could not reach the AI backend. Make sure the server is running on port 5000." },
+        { role: "ai", text: "⚠️ Could not reach the AI backend. Please try again later." },
       ]);
     } finally {
       setIsLoading(false);
