@@ -1,6 +1,5 @@
 import mammoth from "mammoth";
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
+import PDFParser from "pdf-parse";
 
 import { parseResume } from "@/../server/agents/resumeParser.js";
 import { generatePortfolioContent } from "@/../server/agents/portfolioGenerator.js";
@@ -9,7 +8,6 @@ export const runtime = "nodejs";
 
 export async function POST(req: Request) {
   try {
-    const PDFParser = require("pdf-parse"); // Lazy load locally to bypass build-time optional dep checks
     const formData = await req.formData();
     const files = formData.getAll("resumes") as File[];
 
