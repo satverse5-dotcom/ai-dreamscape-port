@@ -1,0 +1,3 @@
+{
+  "/api/deploy-vercel/route": "app/api/deploy-vercel/route.js"
+}

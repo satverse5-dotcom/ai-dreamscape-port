@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 46, "column": 0}, "map": {"version":3,"sources":["file:///D:/Projects/ai-dreamscape-port/app/api/deploy-vercel/route.ts"],"sourcesContent":["import { NextRequest, NextResponse } from \"next/server\";\n\n// Proxy to the Express backend deploy route\nexport async function POST(req: NextRequest) {\n  try {\n    const body = await req.json();\n\n    const res = await fetch(\"http://localhost:5000/api/deploy/vercel\", {\n      method: \"POST\",\n      headers: { \"Content-Type\": \"application/json\" },\n      body: JSON.stringify(body),\n    });\n\n    const data = await res.json();\n    return NextResponse.json(data, { status: res.status });\n  } catch (err: any) {\n    return NextResponse.json(\n      { success: false, error: \"Deploy proxy error: \" + err.message },\n      { status: 500 }\n    );\n  }\n}\n"],"names":[],"mappings":";;;;AAAA;;AAGO,eAAe,KAAK,GAAgB;IACzC,IAAI;QACF,MAAM,OAAO,MAAM,IAAI,IAAI;QAE3B,MAAM,MAAM,MAAM,MAAM,2CAA2C;YACjE,QAAQ;YACR,SAAS;gBAAE,gBAAgB;YAAmB;YAC9C,MAAM,KAAK,SAAS,CAAC;QACvB;QAEA,MAAM,OAAO,MAAM,IAAI,IAAI;QAC3B,OAAO,gJAAY,CAAC,IAAI,CAAC,MAAM;YAAE,QAAQ,IAAI,MAAM;QAAC;IACtD,EAAE,OAAO,KAAU;QACjB,OAAO,gJAAY,CAAC,IAAI,CACtB;YAAE,SAAS;YAAO,OAAO,yBAAyB,IAAI,OAAO;QAAC,GAC9D;YAAE,QAAQ;QAAI;IAElB;AACF"}}]
+}

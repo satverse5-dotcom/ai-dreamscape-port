@@ -1,3 +1,5 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { Brain, Code, Database, Cpu, Globe, Layers } from "lucide-react";
 

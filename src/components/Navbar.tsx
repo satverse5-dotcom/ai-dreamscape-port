@@ -1,6 +1,8 @@
+"use client";
 
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
@@ -13,6 +15,7 @@ const links = [
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <motion.nav
@@ -22,7 +25,7 @@ const Navbar = () => {
       className="fixed top-0 left-0 right-0 z-50 glass-strong"
     >
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-        <NavLink to="/" className="flex items-center gap-2 group">
+        <Link href="/" className="flex items-center gap-2 group">
           <div className="w-10 h-10 rounded-full border-2 border-primary shadow-md overflow-hidden flex items-center justify-center bg-white">
             <img
               src="/S.jpg"
@@ -36,32 +39,29 @@ const Navbar = () => {
           <span className="text-lg font-bold gradient-text">
             Satyam Karn
           </span>
-        </NavLink>
+        </Link>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
-          {links.map((l) => (
-            <NavLink
-              key={l.to}
-              to={l.to}
-              className={({ isActive }) =>
-                `relative text-sm font-medium transition-colors hover:text-primary ${
-                  isActive ? "text-primary" : "text-muted-foreground"
-                }`
-              }
-              end={l.to === "/"}
-            >
-              {l.label}
-              {({ isActive }) =>
-                isActive && (
+          {links.map((l) => {
+            const isActive = l.to === "/" ? pathname === "/" : pathname.startsWith(l.to);
+            return (
+              <Link
+                key={l.to}
+                href={l.to}
+                className={`relative text-sm font-medium transition-colors hover:text-primary ${isActive ? "text-primary" : "text-muted-foreground"
+                  }`}
+              >
+                {l.label}
+                {isActive && (
                   <motion.div
                     layoutId="nav-underline"
                     className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full"
                   />
-                )
-              }
-            </NavLink>
-          ))}
+                )}
+              </Link>
+            );
+          })}
         </div>
 
         {/* Mobile toggle */}
@@ -81,21 +81,20 @@ const Navbar = () => {
           className="md:hidden glass-strong border-t border-border"
         >
           <div className="px-6 py-4 flex flex-col gap-4">
-            {links.map((l) => (
-              <NavLink
-                key={l.to}
-                to={l.to}
-                onClick={() => setOpen(false)}
-                className={({ isActive }) =>
-                  `text-sm font-medium transition-colors ${
-                    isActive ? "text-primary" : "text-muted-foreground"
-                  }`
-                }
-                end={l.to === "/"}
-              >
-                {l.label}
-              </NavLink>
-            ))}
+            {links.map((l) => {
+              const isActive = l.to === "/" ? pathname === "/" : pathname.startsWith(l.to);
+              return (
+                <Link
+                  key={l.to}
+                  href={l.to}
+                  onClick={() => setOpen(false)}
+                  className={`text-sm font-medium transition-colors ${isActive ? "text-primary" : "text-muted-foreground"
+                    }`}
+                >
+                  {l.label}
+                </Link>
+              );
+            })}
           </div>
         </motion.div>
       )}

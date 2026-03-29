@@ -1,8 +1,8 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { Mail, MapPin, Download, Send, MessageCircle } from "lucide-react";
 import { useState } from "react";
-
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -13,7 +13,7 @@ const ContactSection = () => {
     setStatus("sending");
 
     try {
-      const res = await fetch(`${API_URL}/api/contact`, {
+      const res = await fetch(`/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
