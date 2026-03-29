@@ -1,7 +1,9 @@
+"use client";
+
 import { motion } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
-import { ArrowRight, Download } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ArrowRight, Download, Github, Linkedin, Mail, Code2 } from "lucide-react";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -53,7 +55,7 @@ const Hero = () => {
         </motion.div>
 
         <p className="text-primary font-mono text-sm mb-3 tracking-widest uppercase">
-          Hello, I'm
+          Hello, I&apos;m
         </p>
 
         <h1 className="text-4xl md:text-6xl font-bold mb-4 text-foreground">
@@ -84,8 +86,8 @@ const Hero = () => {
           Passionate about building scalable AI solutions using React, Node.js, OpenCV, and PyTorch.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link to="/projects">
+        <div className="flex flex-wrap gap-4 justify-center">
+          <Link href="/projects">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -96,7 +98,7 @@ const Hero = () => {
             </motion.button>
           </Link>
 
-          <a href="/resume.pdf" download>
+          <a href="/api/resume" download="Satyam_Kumar_Karn_Resume.pdf">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -105,6 +107,33 @@ const Hero = () => {
               <Download className="w-4 h-4" />
               Download Resume
             </motion.button>
+          </a>
+
+          <Link href="/contact">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-primary/40 text-primary font-semibold text-sm transition-all hover:bg-primary/10 hover:shadow-[0_0_20px_hsl(var(--neon-cyan)/0.2)]"
+            >
+              <Mail className="w-4 h-4" />
+              Get in Touch
+            </motion.button>
+          </Link>
+        </div>
+
+        {/* Social Links */}
+        <div className="flex justify-center gap-6 mt-8 relative z-20 pointer-events-auto">
+          <a href="https://github.com/satverse5-dotcom" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary hover:shadow-[0_0_15px_hsl(var(--neon-cyan)/0.5)] rounded-full transition-all" title="GitHub">
+            <Github className="w-6 h-6" />
+          </a>
+          <a href="https://linkedin.com/in/satyam-kumar-karn" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary hover:shadow-[0_0_15px_hsl(var(--neon-cyan)/0.5)] rounded-full transition-all" title="LinkedIn">
+            <Linkedin className="w-6 h-6" />
+          </a>
+          <a href="https://leetcode.com/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary hover:shadow-[0_0_15px_hsl(var(--neon-cyan)/0.5)] rounded-full transition-all" title="LeetCode">
+            <Code2 className="w-6 h-6" />
+          </a>
+          <a href="mailto:satverse5@gmail.com" className="text-muted-foreground hover:text-primary hover:shadow-[0_0_15px_hsl(var(--neon-cyan)/0.5)] rounded-full transition-all" title="Email">
+            <Mail className="w-6 h-6" />
           </a>
         </div>
       </motion.div>
