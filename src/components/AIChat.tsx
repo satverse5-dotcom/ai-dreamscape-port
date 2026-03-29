@@ -165,9 +165,10 @@ const AIChat = () => {
     setIsLoading(true);
 
     if (selectedFiles.length > 0) {
+      console.log(`[Frontend] Sending ${selectedFiles.length} files:`, selectedFiles.map(f => f.name));
       const formData = new FormData();
       selectedFiles.forEach((file: File) => {
-        formData.append("resumes", file);
+        formData.append("resumes", file); // Field name MUST match 'resumes'
       });
 
       setMessages((prev) => [...prev, { role: "user", text: `📎 Uploaded ${selectedFiles.length} resumes: ${selectedFiles.map((f: File) => f.name).join(", ")}` }]);
@@ -176,11 +177,14 @@ const AIChat = () => {
       try {
         const res = await fetch(`/api/ai/upload-resume`, {
           method: "POST",
+          // NOTE: Do NOT set Content-Type header. Fetch does this automatically for FormData.
           body: formData,
         });
-        const data = await res.json();
 
-        if (data.success && data.parsedResume && data.portfolioContent) {
+        const data = await res.json();
+        console.log(`[Frontend] Response received:`, data);
+
+        if (res.ok && data.success && data.parsedResume && data.portfolioContent) {
           setMessages((prev) => [
             ...prev,
             { role: "ai", text: "I've generated a preview of your portfolio content. You can review it and click 'Deploy' when you're ready!" },
@@ -193,7 +197,8 @@ const AIChat = () => {
         } else {
           setMessages((prev) => [...prev, { role: "ai", text: data.error || "Failed to process the resume." }]);
         }
-      } catch {
+      } catch (err: any) {
+        console.error(`[Frontend] Upload error:`, err);
         setMessages((prev) => [...prev, { role: "ai", text: "⚠️ Error uploading resume to the backend." }]);
       }
     } else {
